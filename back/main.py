@@ -10,6 +10,7 @@ import os
 
 # ----- 1. 데이터 로딩 및 전처리 -----
 df = pd.read_csv("korean_phishing.csv")  # label: 0(정상), 1(피싱)
+df = df.dropna(subset=["text", "label"]) # NaN 값 제거
 df["label"] = df["label"].astype(int)
 
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
@@ -50,7 +51,7 @@ trainer = Trainer(
 )
 
 # 처음 학습 시에만 실행
-# trainer.train()
+trainer.train()
 
 # ----- 3. 예측 함수 -----
 def predict(text: str):
